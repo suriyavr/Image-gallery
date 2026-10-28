@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import SearchBar from "./components/SearchBar";
+import ImageGallery from "./components/ImageGallery";
+import images from "./data/imageData";
+import "./styles/App.css";
 
 function App() {
+  const [query, setQuery] = useState("");
+
+  const filtered = images.filter((img) =>
+    img.title.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main className="gallery">
+        <SearchBar query={query} onChange={setQuery} />
+        <ImageGallery images={filtered} />
+      </main>
+    </>
   );
 }
 
