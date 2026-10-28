@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# Image Gallery (React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive image gallery built with React. Each item is shown as a reusable card with an image, title, description and time, and the list can be filtered with a live search box.
 
-## Available Scripts
+**Live demo:** https://YOUR-SITE-LINK-HERE
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Reusable `ImageCard` component to display each item
+- Image details stored in an array of objects (`imageData.js`)
+- Cards rendered dynamically with `map()`
+- Data passed from parent to child components using props
+- Live search by title (case-insensitive)
+- "No results found" message when nothing matches
+- React Fragments used to avoid extra DOM elements
+- Responsive layout (works on mobile, tablet and desktop)
+- Hover effects, fade-in animation and gradient styling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- React (Create React App)
+- JavaScript (ES6+)
+- CSS3 (Flexbox, media queries, CSS variables, animations)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Folder Structure
 
-### `npm run build`
+```
+image-gallery/
+├── public/
+├── src/
+│   ├── assets/            # one.jpg ... six.jpg
+│   ├── components/
+│   │   ├── ImageCard.jsx      # displays one item
+│   │   ├── ImageGallery.jsx   # loops over the list with map()
+│   │   └── SearchBar.jsx      # controlled search input
+│   ├── data/
+│   │   └── imageData.js       # array of image objects
+│   ├── styles/
+│   │   └── App.css            # all styling and responsive rules
+│   ├── App.js                 # parent: state, filtering, layout
+│   └── index.js               # entry point
+├── package.json
+└── README.md
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How It Works
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+imageData.js  →  App.js  →  ImageGallery  →  ImageCard
+                   ↑  ↓
+                SearchBar
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. `App` holds the search text (`useState`) and imports the full image list.
+2. Typing in `SearchBar` updates the search text in `App`.
+3. `App` filters the list by title and passes the result to `ImageGallery`.
+4. `ImageGallery` uses `map()` to render one `ImageCard` per item.
+5. `ImageCard` displays the image, title, description and time.
 
-### `npm run eject`
+## Data Format
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Each item in `src/data/imageData.js` looks like this:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+{
+  id: 1,
+  imageUrl: one,
+  title: "Jessica Koel",
+  description: "Hey, Joel, I here to help you out please...",
+  time: "11:26"
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Adding a new image
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Put the image file in `src/assets/`.
+2. Import it at the top of `imageData.js`.
+3. Add a new object to the array with a **unique `id`**.
 
-## Learn More
+The gallery updates automatically. No JSX changes are needed.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Getting Started
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Prerequisites
 
-### Code Splitting
+- [Node.js](https://nodejs.org/) (LTS version)
+- npm (comes with Node.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Installation
 
-### Analyzing the Bundle Size
+```bash
+git clone https://github.com/suriyavr/Image-gallery.git
+cd Image-gallery
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Run locally
 
-### Making a Progressive Web App
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Open http://localhost:3000 in your browser.
 
-### Advanced Configuration
+### Build for production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm run build
+```
 
-### Deployment
+The final site is created in the `build/` folder.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Deployment
 
-### `npm run build` fails to minify
+The `build/` folder can be hosted on any static host:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Netlify:** drag and drop the `build` folder at app.netlify.com/drop
+- **Vercel:** import the GitHub repo and click Deploy
+- **GitHub Pages:** use the `gh-pages` package and set `homepage` in `package.json`
+
+## Concepts Practiced
+
+- Components and props
+- `useState` hook
+- Controlled inputs
+- Lifting state up
+- Rendering lists with `map()` and `key`
+- Conditional rendering
+- Spread operator for props
+- React Fragments
+- Responsive CSS
+
+## Author
+
+**Your Name**
+GitHub: https://github.com/suriyavr
